@@ -24,7 +24,7 @@ def show_rle(rel):
     plt.show()
 
 
-DATA_ROOT = '/home/ccy-gpl/Datasets/HW3'
+DATA_ROOT = '.'
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
@@ -38,7 +38,7 @@ MetadataCatalog.get("tiny-pascal").thing_classes = ["aeroplane", "bicycle", 'bir
                                                     'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike',
                                                     'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor']
 print(MetadataCatalog.get(cfg.DATASETS.TRAIN[0]))
-cfg.MODEL.WEIGHTS = os.path.join("modules/model_0199999.pth")  # path to the model we just trained
+cfg.MODEL.WEIGHTS = os.path.join("models/model_0199999.pth")  # path to the model we just trained
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set a custom testing threshold
 predictor = DefaultPredictor(cfg)
 # print(predictor.model)
@@ -52,7 +52,6 @@ for img_data in tqdm(test_files['images']):
     h, w, _ = img.shape
     img = cv2.resize(img, (int(w), int(h)))
     outputs = predictor(img)
-    '''
     # display
     print(outputs)
     v = Visualizer(img[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2)
@@ -75,6 +74,7 @@ for img_data in tqdm(test_files['images']):
         pred['segmentation'] = binary_mask_to_rle(pred_masks[i, :, :].cpu().numpy())
         pred['score'] = float(pred_scores[i])
         coco_dt.append(pred)
+    '''
 
 with open("submission.json", "w") as f:
     json.dump(coco_dt, f)
