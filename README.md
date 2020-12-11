@@ -11,7 +11,7 @@ python -m pip install -e detectron2
 ## Train
 Download pretrained model weights at https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-50.pkl  
 Other models are avaliable at https://github.com/facebookresearch/detectron2/blob/master/MODEL_ZOO.md  
-Create a folder named models and put the downloaded weights into it  
+Create a folder named 'models' and put the downloaded weights into it  
   
 Extract the training data in this folder or set the DATA_ROOT variable in TrainMyRCNN.py  
 Run training script  
